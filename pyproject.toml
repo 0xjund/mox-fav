@@ -4,4 +4,11 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+include = ["src", "script", "tests"]
+extraPaths = ["src"]
+typeCheckingMode = "basic"
+dependencies = [
+    "moccasin>=0.4.2",
+    "pytest>=8.4.2",
+    "vyper==0.4.3",
+]

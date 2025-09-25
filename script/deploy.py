@@ -1,12 +1,25 @@
-from src import Counter
+from src import favorites 
 from moccasin.boa_tools import VyperContract
+from moccasin.config import get_active_network
 
-def deploy() -> VyperContract:
-    counter: VyperContract = Counter.deploy()
-    print("Starting count: ", counter.number())
-    counter.increment()
-    print("Ending count: ", counter.number())
-    return counter
+def deploy_favorites() -> VyperContract:
+    favorites_contract: VyperContract =  favorites.deploy()
+    starting_number: int = favorites_contract.retrieve() 
+    print(f"Starting number is {starting_number}")
+
+    favorites_contract.store(77)
+    ending_number: int = favorites_contract.retrieve()
+    print(f"Ending number is: {ending_number}")
+
+    active_network = get_active_network()
+    if active_network.has_explorer():
+        result = active_network.moccasin_verify(favorites_contract)
+        result.wait_for_verification()
+    return favorites_contract
 
 def moccasin_main() -> VyperContract:
-    return deploy()
+    return deploy_favorites()
+
+# Deploy to Sepolia
+
+# Verify on Sepolia 
